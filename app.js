@@ -1,3 +1,8 @@
+// 可以新增back to index的功能
+// 還未做create錯誤程式碼
+// 還未做shortener URL，error.hbs
+// 美化
+
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
@@ -42,9 +47,21 @@ app.post('/', (req, res) => {
       if (!data) {
         return Url.create({ origin: req.body.url, short: shortURL })
       }
+      return data
     })
     .then(data => {
       res.render('success', { shortURL: data.short })
+    })
+    .catch(err => console.log(err))
+})
+
+
+// shortener URL
+app.get('/:shortURL', (req, res) => {
+  const shortURL = req.params.shortURL
+  Url.findOne({ short: shortURL })
+    .then(data => {
+      res.redirect(data.origin)
     })
     .catch(err => console.log(err))
 })
