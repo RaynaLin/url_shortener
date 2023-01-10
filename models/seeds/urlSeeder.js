@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const Url = require('../urls')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()

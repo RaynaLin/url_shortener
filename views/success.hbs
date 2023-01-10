@@ -1,0 +1,16 @@
+<div class="container">
+  <h3>Success! Please use this link:</h3>
+  <p id="generatedURL">http://localhost:3000/{{shortURL}}</p>
+  <button id="copy_btn">Copy</button>
+</div>
+
+<script>
+  const generatedURL = document.querySelector('#generatedURL')
+  const CopyBtn = document.querySelector('#copy_btn')
+
+  CopyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(generatedURL.innerText)
+    alert('copy successfully!')
+  })
+
+</script>
