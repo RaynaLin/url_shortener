@@ -12,6 +12,7 @@ const bodyParser = require('body-parser')
 const db = mongoose.connection
 const app = express()
 const port = 3000
+const routes = require('./routes')
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(routes)
 
 // db status
 db.on('error', () => {
@@ -32,39 +34,46 @@ db.once('open', () => {
 })
 
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
+// app.get('/', (req, res) => {
+//   res.render('index')
+// })
 
-// create
-app.post('/', (req, res) => {
-  if (!req.body.url) return res.redirect("/")
-  const shortURL = randomUrl(5)
+// // create
+// app.post('/', (req, res) => {
+//   if (!req.body.url) return res.redirect("/")
+//   const shortURL = randomUrl(5)
 
-  Url.findOne({ origin: req.body.url })
-    .lean()
-    .then(data => {
-      if (!data) {
-        return Url.create({ origin: req.body.url, short: shortURL })
-      }
-      return data
-    })
-    .then(data => {
-      res.render('success', { shortURL: data.short })
-    })
-    .catch(err => console.log(err))
-})
+//   Url.findOne({ origin: req.body.url })
+//     .lean()
+//     .then(data => {
+//       if (!data) {
+//         return Url.create({ origin: req.body.url, short: shortURL })
+//       }
+//       return data
+//     })
+//     .then(data => {
+//       res.render('success', { shortURL: data.short })
+//     })
+//     .catch(err => console.log(err))
+// })
 
 
-// shortener URL
-app.get('/:shortURL', (req, res) => {
-  const shortURL = req.params.shortURL
-  Url.findOne({ short: shortURL })
-    .then(data => {
-      res.redirect(data.origin)
-    })
-    .catch(err => console.log(err))
-})
+// // shortener URL
+// app.get('/:shortURL', (req, res) => {
+//   const shortURL = req.params.shortURL
+//   Url.findOne({ short: shortURL })
+//     .then(data => {
+//       if (!data) {
+//         return res.render('error', {
+//           ErrorMsg: "Can't found the URL:",
+//           ErrorURL: req.headers.host + "/" + shortURL
+//         })
+//       }
+
+//       res.redirect(data.origin)
+//     })
+//     .catch(err => console.log(err))
+// })
 
 
 app.listen(port, () => {
