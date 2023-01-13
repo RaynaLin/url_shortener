@@ -1,16 +1,26 @@
 <div class="container">
-  <h3 class="mt-3">Success! Please use this link:</h3>
-  <p id="generatedURL" class="mt-3">http://localhost:3000/{{shortURL}}</p>
-  <button id="copy_btn" class="mt-3 btn btn-outline-primary">Copy</button>
+  <h3 class="mt-3 row justify-content-center">Success! Please use this link:</h3>
+  <div class="row justify-content-center">
+    <p id="generatedURL" class="mt-3 col-5 rounded-pill bg-light text-dark">
+      http://localhost:3000/{{shortURL}}
+      <img src="https://cdn-icons-png.flaticon.com/512/9070/9070501.png" alt="copy-img" id="copy_btn"
+        style="width: 15px; height: 15px; float: right;" class="m-1">
+    </p>
+  </div>
+  <a class="btn btn-primary mt-4 ms-4" href="/">Back</a>
 </div>
 
 <script>
   const generatedURL = document.querySelector('#generatedURL')
   const CopyBtn = document.querySelector('#copy_btn')
+  const BackBtn = document.querySelector('#back_btn')
 
   CopyBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(generatedURL.innerText)
     alert('copy successfully!')
   })
 
+  BackBtn.addEventListener('click', () => {
+    res.render('index')
+  })
 </script>
