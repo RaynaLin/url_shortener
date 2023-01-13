@@ -1,6 +1,6 @@
 # URL Shortener
 
-
+![IndexPage](./public/url_screenshot.png)
 
 ## 介紹
 
