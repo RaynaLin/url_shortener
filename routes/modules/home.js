@@ -44,5 +44,4 @@ router.get('/:shortURL', (req, res) => {
     .catch(err => console.log(err))
 })
 
-
 module.exports = router

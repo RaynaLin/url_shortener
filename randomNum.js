@@ -10,5 +10,4 @@ function randomUrl(length) {
   return result
 }
 
-
 module.exports = randomUrl
